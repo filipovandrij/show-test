@@ -1,0 +1,28 @@
+name: Analyze Code
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  analyze_code:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Eslint Check
+        run: pnpm run lint

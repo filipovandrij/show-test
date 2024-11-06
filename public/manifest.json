@@ -1,0 +1,55 @@
+{
+  "name": "AIDE - AI Data Engine (Beta)",
+  "description": "User-friendly, no-code AI integration platform designed to link any number of data sources to a variety of AI models.",
+  "version": "0.6.94",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; frame-src 'https://www.ainsys.com' https://chat.openai.com/ 'self'"
+  },
+  "manifest_version": 3,
+  "action": {
+    "default_title": "AIDE"
+  },
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "background": {
+    "service_worker": "./static/js/background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["logo.png", "index.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "scripting",
+    "identity",
+    "storage",
+    "unlimitedStorage",
+    "webNavigation",
+    "webRequest",
+    "alarms",
+    "clipboardWrite",
+    "cookies"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://chat.openai.com/"],
+      "all_frames": true,
+      "js": ["./static/js/chatGPT.js"]
+    }
+  ],
+  "host_permissions": ["<all_urls>"],
+  "commands": {
+    "open-extensions-tab": {
+      "suggested_key": {
+        "default": "Alt+Z"
+      },
+      "description": "Open"
+    }
+  }
+}
